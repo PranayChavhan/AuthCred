@@ -13,6 +13,8 @@ const DropzoneComponent: React.FC = () => {
       const previewUrl = URL.createObjectURL(acceptedFiles[0]);
       setPreviewPdf(previewUrl);
     }
+
+    console.log(pdfFiles);
   };
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({

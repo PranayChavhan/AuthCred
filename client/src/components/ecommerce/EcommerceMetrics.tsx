@@ -5,7 +5,7 @@ import {
   BoxIconLine,
   GroupIcon,
 } from "../../icons";
-import Badge from "../ui/badge/Badge";
+// import Badge from "../ui/badge/Badge";
 
 export default function EcommerceMetrics() {
   return (

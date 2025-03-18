@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-import EcommerceMetrics from "../../components/ecommerce/EcommerceMetrics";
-import MonthlySalesChart from "../../components/ecommerce/MonthlySalesChart";
+// import EcommerceMetrics from "../../components/ecommerce/EcommerceMetrics";
+// import MonthlySalesChart from "../../components/ecommerce/MonthlySalesChart";
 import RecentOrders from "../../components/ecommerce/RecentOrders";
 import DropzoneComponent from "../../components/form/form-elements/DropZone";
 import EmployeeInput from "../../components/form/form-elements/EmployeeInput";
