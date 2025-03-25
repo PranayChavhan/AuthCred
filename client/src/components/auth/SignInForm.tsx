@@ -1,6 +1,5 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { Link, useNavigate } from "react-router";
 import { ChevronLeftIcon, EyeCloseIcon, EyeIcon } from "../../icons";
 import Label from "../form/Label";
@@ -34,9 +33,14 @@ export default function SignInForm() {
 
       // Redirect to dashboard or home page
       navigate('/');
-    } catch (err: any) {
-      // Handle login error
-      setError(err.response?.data?.message || "Sign in failed. Please try again.");
+    } catch (err: unknown) {
+      if (err instanceof AxiosError) {
+        setError(err.response?.data?.message || "Sign in failed. Please try again.");
+      } else if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError("Sign in failed. Please try again.");
+      }
     }
   };
 
