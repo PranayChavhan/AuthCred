@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router";
 import { ChevronLeftIcon, EyeCloseIcon, EyeIcon } from "../../icons";
@@ -16,12 +16,14 @@ export default function SignInForm() {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
 
     try {
-      const response = await axios.post('http://localhost:5000/api/auth/signin', {
+      const response = await axios.post(`${API_BASE_URL}/auth/signin`, {
         email,
         password
       });
@@ -33,12 +35,18 @@ export default function SignInForm() {
       localStorage.setItem('user', JSON.stringify(response.data.user));
 
       // Redirect to dashboard or home page
-      navigate('/');
+      navigate("/", { replace: true }); // Redirect to home
     } catch (err: any) {
       // Handle login error
       setError(err.response?.data?.message || "Sign in failed. Please try again.");
     }
   };
+
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      navigate("/");
+    }
+  }, [navigate]);
 
   return (
     <div className="flex flex-col flex-1">

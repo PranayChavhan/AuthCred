@@ -21,6 +21,8 @@ import Home from "./pages/Dashboard/Home";
 import EmployeeVerification from "./pages/EmployeeVerification/EmployeeVerification";
 import ReportsAndAnalytics from "./pages/ReportsAndAnalytics/ReportsAndAnalytics";
 import Notification from "./pages/Notification/Notification";
+import ProtectedRoute from "./ProtectedRoute";
+
 
 export default function App() {
   return (
@@ -29,6 +31,8 @@ export default function App() {
         <ScrollToTop />
         <Routes>
           {/* Dashboard Layout */}
+          <Route element={<ProtectedRoute />}>
+          
           <Route element={<AppLayout />}>
             <Route index path="/" element={<Home />} />
             <Route index path="/verification" element={<EmployeeVerification/>} />
@@ -57,6 +61,10 @@ export default function App() {
             <Route path="/line-chart" element={<LineChart />} />
             <Route path="/bar-chart" element={<BarChart />} />
           </Route>
+          </Route>
+
+
+
 
           {/* Auth Layout */}
           <Route path="/signin" element={<SignIn />} />
