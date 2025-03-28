@@ -1,37 +1,113 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import React, { useState } from "react";
 import ComponentCard from "../../common/ComponentCard";
 import { useDropzone } from "react-dropzone";
-import { useState } from "react";
+import * as pdfjsLib from 'pdfjs-dist/legacy/build/pdf.mjs';
+import 'pdfjs-dist/legacy/build/pdf.worker.mjs';
 
 const DropzoneComponent: React.FC = () => {
-  const [pdfFiles, setPdfFiles] = useState<File[]>([]);
   const [previewPdf, setPreviewPdf] = useState<string | null>(null);
+  const [extractedInfo, setExtractedInfo] = useState<{name: string, email: string} | null>(null);
 
-  const onDrop = (acceptedFiles: File[]) => {
-    setPdfFiles(acceptedFiles);
-    if (acceptedFiles.length > 0) {
-      const previewUrl = URL.createObjectURL(acceptedFiles[0]);
-      setPreviewPdf(previewUrl);
+  // Function to extract text from PDF
+  const extractTextFromPDF = async (file: File) => {
+    try {
+      // Convert File to ArrayBuffer
+      const arrayBuffer = await file.arrayBuffer();
+      
+      // Load PDF document
+      const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+      
+      // Initialize text to collect from all pages
+      let fullText = '';
+      
+      // Extract text from all pages
+      for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+        const page = await pdf.getPage(pageNum);
+        const textContent = await page.getTextContent();
+        const pageText = textContent.items.map((item: any) => item.str).join(' ');
+        fullText += ' ' + pageText;
+      }
+      
+      console.log('====================================');
+      console.log(extractedInfo);
+      console.log('====================================');
+      return fullText;
+    } catch (error) {
+      console.error("Error extracting PDF text:", error);
+      return '';
+    }
+  };
+
+  // Function to extract name and email from text
+  const extractNameAndEmail = (text: string) => {
+    // More comprehensive email regex
+    const emailRegex = /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b/;
+    
+    // More flexible name regex to catch various name formats
+    const nameRegexes = [
+      /([A-Z][a-z]+ [A-Z][a-z]+)/,  // First Last
+      /([A-Z][a-z]+ [A-Z]\. [A-Z][a-z]+)/,  // First M. Last
+      /([A-Z][a-z]+ [A-Z][a-z]+ [A-Z][a-z]+)/  // First Middle Last
+    ];
+
+    const emailMatch = text.match(emailRegex);
+    
+    // Try different name regex patterns
+    let nameMatch = null;
+    for (const regex of nameRegexes) {
+      nameMatch = text.match(regex);
+      if (nameMatch) break;
     }
 
-    console.log(pdfFiles);
+    return {
+      email: emailMatch ? emailMatch[0].trim() : 'No email found',
+      name: nameMatch ? nameMatch[1].trim() : 'No name found'
+    };
+  };
+
+  const onDrop = async (acceptedFiles: File[]) => {
+    
+
+    if (acceptedFiles.length > 0) {
+      // Create preview
+      const previewUrl = URL.createObjectURL(acceptedFiles[0]);
+      setPreviewPdf(previewUrl);
+
+      // Extract text from PDF
+      const extractedText = await extractTextFromPDF(acceptedFiles[0]);
+      
+      // Extract name and email
+      const info = extractNameAndEmail(extractedText);
+      
+      // Store in local storage
+      localStorage.setItem('resumeInfo', JSON.stringify(info));
+      
+      // Update state
+      setExtractedInfo(info);
+
+      console.log('Extracted Info:', info);
+    }
   };
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
     accept: { "application/pdf": [] },
-    multiple: true,
+    multiple: false, // Limit to single file
   });
 
   return (
-    <ComponentCard title="PDF Dropzone">
+    <ComponentCard title="PDF Resume Extractor">
       <div className="transition border border-gray-300 border-dashed cursor-pointer dark:hover:border-brand-500 dark:border-gray-700 rounded-xl hover:border-brand-500">
         {previewPdf ? (
-          <iframe
-            src={previewPdf}
-            className="w-full h-96 rounded-xl border border-gray-300 dark:border-gray-700"
-            title="PDF Preview"
-          ></iframe>
+          <div>
+            <iframe
+              src={previewPdf}
+              className="w-full h-96 rounded-xl border border-gray-300 dark:border-gray-700"
+              title="PDF Preview"
+            ></iframe>
+         
+          </div>
         ) : (
           <form
             {...getRootProps()}
@@ -59,10 +135,10 @@ const DropzoneComponent: React.FC = () => {
                 </div>
               </div>
               <h4 className="mb-3 font-semibold text-gray-800 text-theme-xl dark:text-white/90">
-                {isDragActive ? "Drop PDFs Here" : "Drag & Drop PDF Files Here"}
+                {isDragActive ? "Drop PDF Here" : "Drag & Drop Resume PDF Here"}
               </h4>
               <span className="text-center mb-5 block w-full max-w-[290px] text-sm text-gray-700 dark:text-gray-400">
-                Drag and drop your PDF files here or browse
+                Drag and drop your resume PDF here or browse
               </span>
               <span className="font-medium underline text-theme-sm text-brand-500">
                 Browse File

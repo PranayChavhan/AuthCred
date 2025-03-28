@@ -3,6 +3,8 @@ import dotenv from "dotenv";
 import cors from "cors";
 import connectDB from "./config/db.js";
 import authRoutes from "./routes/authRoutes.js";
+import userRoutes from "./routes/userRoutes.js";
+import employeeRoutes from "./routes/employeeRoutes.js";
 
 dotenv.config();
 connectDB();
@@ -13,6 +15,10 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/api/auth", authRoutes);
+
+app.use("/api/users", userRoutes);
+
+app.use('/api/employees', employeeRoutes);
 
 // Add a root route for welcome message
 app.get("/", (req, res) => {
