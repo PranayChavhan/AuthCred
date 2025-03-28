@@ -31,9 +31,10 @@ export default function App() {
       <Router>
         <ScrollToTop />
         <Routes>
+        <Route index path="/form/:id" element={<EmployeeForm/>} />
           {/* Dashboard Layout */}
           <Route element={<ProtectedRoute />}>
-          <Route index path="/form" element={<EmployeeForm/>} />
+          
           
           <Route element={<AppLayout />}>
             <Route index path="/" element={<Home />} />
