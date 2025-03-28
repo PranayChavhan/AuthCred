@@ -22,6 +22,7 @@ import EmployeeVerification from "./pages/EmployeeVerification/EmployeeVerificat
 import ReportsAndAnalytics from "./pages/ReportsAndAnalytics/ReportsAndAnalytics";
 import Notification from "./pages/Notification/Notification";
 import ProtectedRoute from "./ProtectedRoute";
+import EmployeeForm from "./pages/EmployeeForm/EmployeeForm";
 
 
 export default function App() {
@@ -32,6 +33,7 @@ export default function App() {
         <Routes>
           {/* Dashboard Layout */}
           <Route element={<ProtectedRoute />}>
+          <Route index path="/form" element={<EmployeeForm/>} />
           
           <Route element={<AppLayout />}>
             <Route index path="/" element={<Home />} />
