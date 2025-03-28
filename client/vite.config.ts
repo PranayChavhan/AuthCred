@@ -15,4 +15,8 @@ export default defineConfig({
       },
     }),
   ],
+  base: '/', // Ensure base is set to root
+  build: {
+    outDir: 'dist', // Vercel will look for index.html here
+  }
 });
