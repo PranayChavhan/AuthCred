@@ -35,8 +35,7 @@ export default function App() {
         
           {/* Dashboard Layout */}
           <Route path="/form/:id" element={<EmployeeForm/>} />
-          <Route path="/blank" element={<Blank />} />
-
+          
           <Route element={<ProtectedRoute />}>
           
           
@@ -50,7 +49,7 @@ export default function App() {
             <Route path="/profile" element={<UserProfiles />} />
             <Route path="/employee/:id" element={<EmployeeDetails/>} />
             <Route path="/calendar" element={<Calendar />} />
-            
+            <Route path="/blank" element={<Blank />} />
 
             {/* Forms */}
             <Route path="/form-elements" element={<FormElements />} />
