@@ -51,9 +51,7 @@ export default function EmployeeInput() {
       const token = localStorage.getItem("token"); // Get token from localStorage
   
       // Upload employee data
-      const response = await axios.post(
-        `${API_BASE_URL}/employees/upload`,
-        { 
+      const response = await axios.post(`${API_BASE_URL}/employees/upload`,{ 
           firstName: storedInfo.name, 
           email: storedInfo.email 
         },
@@ -81,6 +79,15 @@ export default function EmployeeInput() {
     }
   };
   
+  // const handleSendEmail = async (email: string) => {
+  //   try {
+  //     await axios.post("http://localhost:5000/send-email", { email });
+  //     alert(`Email sent successfully to ${email}`);
+  //   } catch (error) {
+  //     alert("Failed to send email. Please try again.");
+  //     console.error(error);
+  //   }
+  // };
 
   return (
     <ComponentCard title="Employee Details">

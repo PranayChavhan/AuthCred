@@ -1,11 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { Table, TableBody, TableCell, TableHeader, TableRow } from "../ui/table";
-import Badge from "../ui/badge/Badge";
+import { Table, TableCell, TableHeader, TableRow } from "../ui/table";
+import { useNavigate } from "react-router";
+
 
 interface Employee {
-  id: string;
+  profilePhoto: string;
+  _id: string;
   firstName: string;
   email: string;
   verificationStatus: "Verified" | "Pending" | "Flagged";
@@ -13,7 +15,9 @@ interface Employee {
 }
 
 export default function EmployeeList() {
+  const navigate = useNavigate();
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+  const FILE_BASE_URL = import.meta.env.VITE_API_BASE_URL_FILE;
   
   const [employees, setEmployees] = useState<Employee[]>([]);
   const [filter, setFilter] = useState<string | null>(null);
@@ -37,6 +41,8 @@ export default function EmployeeList() {
         
         setEmployees(sortedEmployees);
         setLoading(false);
+
+
       } catch (err) {
         setError('Failed to fetch employees');
         console.log(err);
@@ -48,12 +54,21 @@ export default function EmployeeList() {
     fetchEmployees();
   }, []);
 
+
   const filteredData = filter 
     ? employees.filter((emp) => emp.verificationStatus === filter) 
     : employees;
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>{error}</div>;
+
+
+  const handleRowClick = (employeeId: string) => {
+    console.log('====================================');
+    console.log(employeeId);
+    console.log('====================================');
+    navigate(`/employee/${employeeId}`);
+  }
 
   return (
     <div className="overflow-hidden rounded-2xl border border-gray-200 bg-white px-4 pb-3 pt-4 dark:border-gray-800 dark:bg-white/[0.03] sm:px-6">
@@ -81,35 +96,45 @@ export default function EmployeeList() {
               <TableCell isHeader className="py-3 text-gray-500 text-start">Created At</TableCell>
             </TableRow>
           </TableHeader>
-          <TableBody className="divide-y divide-gray-100 dark:divide-gray-800">
-            {filteredData.map((employee) => (
-              <TableRow key={employee.id}>
-                <TableCell className="py-3 flex items-center gap-3">
-                <img src="/images/product/product-01.jpg" className="h-[50px] w-[50px] rounded-md" alt={employee.firstName} />
-                  <div>
-                    <p className="font-medium text-gray-800 dark:text-white/90">{employee.firstName}</p>
-                  </div>
-                </TableCell>
-                <TableCell className="py-3 text-gray-500">{employee.email}</TableCell>
-                <TableCell className="py-3">
-                  <Badge 
-                    color={
-                      employee.verificationStatus === "Verified" 
-                        ? "success" 
-                        : employee.verificationStatus === "Pending" 
-                        ? "warning" 
-                        : "error"
-                    }
-                  >
-                    {employee.verificationStatus}
-                  </Badge>
-                </TableCell>
-                <TableCell className="py-3 text-gray-500">
-                  {new Date(employee.createdAt).toLocaleDateString()}
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
+          <tbody className="divide-y divide-gray-100 dark:divide-gray-800 w-full">
+      {filteredData.map((employee) => (
+        <tr
+          key={employee._id}
+          onClick={() => handleRowClick(employee._id)}
+          className="cursor-pointer w-full hover:bg-gray-100 border rounded-b-2xl"
+        >
+          <td className="py-3 px-4 flex items-center gap-3 w-full">
+            <img
+              src={`${FILE_BASE_URL}${employee.profilePhoto}`}
+              className="h-[50px] w-[50px] rounded-md"
+              alt={employee.firstName}
+            />
+            <div>
+              <p className="font-medium text-gray-800 dark:text-white/90">
+                {employee.firstName}
+              </p>
+            </div>
+          </td>
+          <td className="py-3 px-4 text-gray-500">{employee.email}</td>
+          <td className="py-3 px-4 text-gray-500">
+            <span
+              className={`${
+                employee.verificationStatus === "Verified"
+                  ? "text-green-500"
+                  : employee.verificationStatus === "Pending"
+                  ? "text-yellow-500"
+                  : "text-red-500"
+              }`}
+            >
+              {employee.verificationStatus}
+            </span>
+          </td>
+          <td className="py-3 px-4 text-gray-500">
+            {new Date(employee.createdAt).toLocaleDateString()}
+          </td>
+        </tr>
+      ))}
+    </tbody>
         </Table>
       </div>
     </div>

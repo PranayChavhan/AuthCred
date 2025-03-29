@@ -23,6 +23,7 @@ import ReportsAndAnalytics from "./pages/ReportsAndAnalytics/ReportsAndAnalytics
 import Notification from "./pages/Notification/Notification";
 import ProtectedRoute from "./ProtectedRoute";
 import EmployeeForm from "./pages/EmployeeForm/EmployeeForm";
+import EmployeeDetails from "./pages/EmployeeDetails/EmployeeDetails";
 
 
 export default function App() {
@@ -43,6 +44,7 @@ export default function App() {
             <Route index path="/notification" element={<Notification/>} />
             {/* Others Page */}
             <Route path="/profile" element={<UserProfiles />} />
+            <Route path="/employee/:id" element={<EmployeeDetails/>} />
             <Route path="/calendar" element={<Calendar />} />
             <Route path="/blank" element={<Blank />} />
 

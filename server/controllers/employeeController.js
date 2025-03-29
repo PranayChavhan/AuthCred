@@ -1,6 +1,8 @@
 import Employee from '../models/employeeModel.js';
 import path from 'path';
 import fs from 'fs';
+import mailSender from '../utils/mailSender.js';
+import otpTemplate from '../mail/templates/emailVerificationTemplate.js'
 
 // Upload File (POST)
 export const uploadFile = async (req, res) => {
@@ -35,6 +37,10 @@ export const uploadEmployee = async (req, res) => {
 
         const employee = new Employee({ firstName, email });
         await employee.save();
+        // send email to employee
+        
+        await mailSender(email, 'OTP Verification Email', otpTemplate(employee._id, firstName));
+
         res.status(201).json({ message: 'Employee uploaded successfully.', employee });
     } catch (error) {
         res.status(500).json({ message: 'Error uploading employee.', error: error.message });

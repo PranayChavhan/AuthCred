@@ -8,6 +8,7 @@ import Flatpickr from "react-flatpickr";
 import Radio from "../../components/form/input/Radio";
 import Select from "../../components/form/Select";
 import FileInput from "../../components/form/input/FileInput";
+import axios from "axios";
 
 type Address = {
   street: string;
@@ -203,38 +204,57 @@ export default function EmployeeVerificationForm() {
 
   const [preview, setPreview] = useState<string | null>(null);
 
-  const handleFileChange = (
+  const handleFileChange = async (
     field: string,
     e: React.ChangeEvent<HTMLInputElement>,
     index?: number
   ) => {
     const file = e.target.files?.[0] || null;
-
+    
+  
     if (file) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        if (field === "profilePhoto") {
-          setPreview(reader.result as string);
+      const formData = new FormData();
+      formData.append("file", file);
+  
+      try {
+        // Upload file to backend
+        const response = await fetch("http://localhost:5000/api/employees/upload-file", {
+          method: "POST",
+          body: formData,
+        });
+  
+        const data = await response.json();
+  
+        if (!response.ok) {
+          throw new Error(data.message || "File upload failed.");
         }
+  
+        const fileUrl = data.url; // Get file URL from API response
+        console.log('====================================');
+        console.log(fileUrl);
+        console.log('====================================');
+
+         // If the field is 'profilePhoto', update the preview
+          if (field === "profilePhoto") {
+            setPreview(`http://localhost:5000${fileUrl}`);
+          }
+  
         setFormData((prevFormData) => {
           if (field === "educationalCertificates") {
             return {
               ...prevFormData,
               educationBackground: {
                 ...prevFormData.educationBackground,
-                educationalCertificates: file,
+                educationalCertificates: fileUrl, // Store URL instead of file
               },
             };
           } else if (field === "marksheet" && index !== undefined) {
-            // Update a specific marksheet in the additionalStudies array
-            const updatedStudies = [
-              ...prevFormData.educationBackground.additionalStudies,
-            ];
+            const updatedStudies = [...prevFormData.educationBackground.additionalStudies];
             updatedStudies[index] = {
               ...updatedStudies[index],
-              marksheet: file,
+              marksheet: fileUrl, // Store URL
             };
-
+  
             return {
               ...prevFormData,
               educationBackground: {
@@ -247,33 +267,67 @@ export default function EmployeeVerificationForm() {
               ...prevFormData,
               previousEmployment: {
                 ...prevFormData.previousEmployment,
-                experienceCertificates: file,
+                experienceCertificates: fileUrl, // Store URL
               },
             };
           } else if (field === "profilePhoto") {
+            // setPreview(fileUrl);
             return {
               ...prevFormData,
-              profilePhoto: file,
+              profilePhoto: fileUrl, // Store URL
             };
           } else if (field === "governmentIdProof") {
             return {
               ...prevFormData,
-              governmentIdProof: file,
+              governmentIdProof: fileUrl, // Store URL
             };
           }
-
-          // Return unchanged formData for other fields
+  
           return prevFormData;
         });
-      };
-      reader.readAsDataURL(file);
+      } catch (error) {
+        console.error("File upload error:", error);
+      }
     }
   };
+  
 
+  const updateEmployee = async (formData: FormData) => {
+    try {
+      const response = await axios.put(
+        'http://localhost:5000/api/employees/update/67e7c234352c9fa38bd35b91',
+        formData,
+        {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }
+      );
+      
+      console.log('Employee updated successfully:', response.data);
+      return response.data;
+    } catch (error) {
+      console.error('Error updating employee:', error);
+      throw error;
+    }
+  };
+  
+  // Usage with your existing handleSubmit function:
   const handleSubmit = () => {
     console.log("====================================");
     console.log(formData);
     console.log("====================================");
+    
+    // Call the update function
+    updateEmployee(formData)
+      .then(result => {
+        console.log('Update successful:', result);
+        // Add any success handling here (e.g., redirect, show success message)
+      })
+      .catch(error => {
+        console.error('Update failed:', error);
+        // Add error handling here (e.g., show error message)
+      });
   };
 
   return (

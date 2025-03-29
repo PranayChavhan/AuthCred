@@ -7,7 +7,7 @@ import userRoutes from "./routes/userRoutes.js";
 import employeeRoutes from "./routes/employeeRoutes.js";
 import path from 'path';
 import { fileURLToPath } from 'url';
-
+import nodemailer from"nodemailer";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -33,6 +33,41 @@ app.use('/api/employees', employeeRoutes);
 app.get("/", (req, res) => {
   res.send("Welcome to AuthCred API! 🚀");
 });
+
+
+
+
+const transporter = nodemailer.createTransport({
+  service: "Gmail",
+  auth: {
+    user: "saijadhav1723@gmail.com",
+    pass: "lcqf qech toba yzng"
+  },
+});
+
+app.post("/send-email", (req, res) => {
+  const { email } = req.body;
+
+  const mailOptions = {
+    from: "ben10.official777@gmail.com",
+    to: email,
+    subject: `Status Update`,
+    text: `Your current status is`,
+  };
+
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.log('====================================');
+      console.log(error);
+      console.log('====================================');
+      return res.status(500).send("Failed to send email");
+    }
+    res.status(200).send("Email sent successfully");
+  });
+});
+
+
+
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT} and live url is: https://authcred.onrender.com`));

@@ -1,0 +1,52 @@
+// src/types/employee.ts
+export interface Address {
+    street: string;
+    city: string;
+    state: string;
+    postalCode: string;
+    country: string;
+  }
+  
+  export interface EducationBackground {
+    highestQualification: string;
+    institutionName: string;
+    yearOfPassing: string;
+    educationalCertificates: File | null;
+    additionalStudies: AdditionalStudy[];
+  }
+
+  type AdditionalStudy = {
+    level: "10th" | "12th" | "Diploma";
+    institutionName: string;
+    yearOfPassing: string;
+    marksheet: File | null;
+  };
+  type PreviousEmployment = {
+    jobTitle: string;
+    companyName: string;
+    companyEmail: string;
+    hrEmail: string;
+    duration: string;
+    reasonForLeaving: string;
+    experienceCertificates: File | null;
+  };
+  
+  export interface Employee {
+    _id?: string;
+    email: string;
+    verificationStatus: string;
+    profilePhoto: string;
+    firstName: string;
+    middleName?: string;
+    lastName: string;
+    phoneNumber: string;
+    dateOfBirth: string;
+    gender: string;
+    nationality: string;
+    governmentIdNumber: string;
+    governmentIdProof: string;
+    currentAddress: Address;
+    permanentAddress: Address;
+    educationBackground: EducationBackground;
+    previousEmployment: PreviousEmployment;
+  }
