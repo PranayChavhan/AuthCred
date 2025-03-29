@@ -1,15 +1,39 @@
 import Employee from '../models/employeeModel.js';
+import path from 'path';
+import fs from 'fs';
 
+// Upload File (POST)
+export const uploadFile = async (req, res) => {
+    try {
+      if (!req.file) {
+        return res.status(400).json({ message: 'No file uploaded.' });
+      }
+  
+      // Get the file details
+      const file = req.file;
+      const fileUrl = `/uploads/${file.filename}`;
+  
+      res.status(200).json({
+        message: 'File uploaded successfully.',
+        filename: file.filename,
+        url: fileUrl
+      });
+    } catch (error) {
+      res.status(500).json({ message: 'Error uploading file.', error: error.message });
+    }
+  };
+
+  
 // Upload Employee (POST)
 export const uploadEmployee = async (req, res) => {
     try {
-        const { name, email } = req.body;
+        const { firstName, email } = req.body;
 
-        if (!name || !email) {
+        if (!firstName || !email) {
             return res.status(400).json({ message: 'Name and Email are required.' });
         }
 
-        const employee = new Employee({ name, email });
+        const employee = new Employee({ firstName, email });
         await employee.save();
         res.status(201).json({ message: 'Employee uploaded successfully.', employee });
     } catch (error) {

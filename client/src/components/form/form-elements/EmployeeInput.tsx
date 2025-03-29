@@ -54,7 +54,7 @@ export default function EmployeeInput() {
       const response = await axios.post(
         `${API_BASE_URL}/employees/upload`,
         { 
-          name: storedInfo.name, 
+          firstName: storedInfo.name, 
           email: storedInfo.email 
         },
         {

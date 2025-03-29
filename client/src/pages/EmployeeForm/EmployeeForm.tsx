@@ -79,7 +79,7 @@ export default function EmployeeVerificationForm() {
     email: "",
     phoneNumber: "",
     dateOfBirth: "",
-    gender: "option1",
+    gender: "Male",
     nationality: "",
     governmentIdNumber: "",
     governmentIdProof: null,
@@ -405,25 +405,25 @@ export default function EmployeeVerificationForm() {
                   <Radio
                     id="radio1"
                     name="gender"
-                    value="option1"
-                    checked={formData.gender === "option1"}
-                    onChange={() => handleInputChange("gender", "option1")}
+                    value="Male"
+                    checked={formData.gender === "Male"}
+                    onChange={() => handleInputChange("gender", "Male")}
                     label="Male"
                   />
                   <Radio
                     id="radio2"
                     name="gender"
-                    value="option2"
-                    checked={formData.gender === "option2"}
-                    onChange={() => handleInputChange("gender", "option2")}
+                    value="Female"
+                    checked={formData.gender === "Female"}
+                    onChange={() => handleInputChange("gender", "Female")}
                     label="Female"
                   />
                   <Radio
                     id="radio3"
                     name="gender"
-                    value="option3"
-                    checked={formData.gender === "option3"}
-                    onChange={() => handleInputChange("gender", "option3")}
+                    value="Other"
+                    checked={formData.gender === "Other"}
+                    onChange={() => handleInputChange("gender", "Other")}
                     label="Other"
                   />
                 </div>

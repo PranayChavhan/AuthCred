@@ -6,7 +6,7 @@ import Badge from "../ui/badge/Badge";
 
 interface Employee {
   id: string;
-  name: string;
+  firstName: string;
   email: string;
   verificationStatus: "Verified" | "Pending" | "Flagged";
   createdAt: string;
@@ -85,9 +85,9 @@ export default function EmployeeList() {
             {filteredData.map((employee) => (
               <TableRow key={employee.id}>
                 <TableCell className="py-3 flex items-center gap-3">
-                <img src="/images/product/product-01.jpg" className="h-[50px] w-[50px] rounded-md" alt={employee.name} />
+                <img src="/images/product/product-01.jpg" className="h-[50px] w-[50px] rounded-md" alt={employee.firstName} />
                   <div>
-                    <p className="font-medium text-gray-800 dark:text-white/90">{employee.name}</p>
+                    <p className="font-medium text-gray-800 dark:text-white/90">{employee.firstName}</p>
                   </div>
                 </TableCell>
                 <TableCell className="py-3 text-gray-500">{employee.email}</TableCell>

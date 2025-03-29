@@ -1,14 +1,65 @@
 import mongoose from 'mongoose';
 
 const employeeSchema = new mongoose.Schema({
-    name: { type: String, required: true },
+    // Basic Information
     email: { type: String, required: true, unique: true },
-    phone: { type: String },
-    address: { type: String },
-    position: { type: String },
-    department: { type: String },
     verificationStatus: { type: String, default: 'Pending' },
-    otherDetails: { type: Object }
+
+    // Personal Information
+    profilePhoto: { type: String, default: null }, // Store URL or file path
+    firstName: { type: String, default: "" },
+    middleName: { type: String, default: "" },
+    lastName: { type: String, default: "" },
+    phoneNumber: { type: String, default: "" },
+    dateOfBirth: { type: String, default: "" },
+    gender: { type: String, default: "Male" },
+    nationality: { type: String, default: "" },
+    governmentIdNumber: { type: String, default: "" },
+    governmentIdProof: { type: String, default: null }, // Store URL or file path
+
+    // Address Information
+    currentAddress: {
+      street: { type: String, default: "" },
+      city: { type: String, default: "" },
+      state: { type: String, default: "" },
+      postalCode: { type: String, default: "" },
+      country: { type: String, default: "" }
+    },
+    permanentAddress: {
+      street: { type: String, default: "" },
+      city: { type: String, default: "" },
+      state: { type: String, default: "" },
+      postalCode: { type: String, default: "" },
+      country: { type: String, default: "" }
+    },
+
+    // Educational Background
+    educationBackground: {
+      highestQualification: { type: String, default: "" },
+      institutionName: { type: String, default: "" },
+      yearOfPassing: { type: String, default: "" },
+      educationalCertificates: { type: String, default: null }, // Store URL or file path
+      additionalStudies: [
+        {
+          level: { type: String },
+          institutionName: { type: String, default: "" },
+          yearOfPassing: { type: String, default: "" },
+          marksheet: { type: String, default: null } // Store URL or file path
+        }
+      ]
+    },
+
+    // Previous Employment
+    previousEmployment: {
+      jobTitle: { type: String, default: "" },
+      companyName: { type: String, default: "" },
+      companyEmail: { type: String, default: "" },
+      hrEmail: { type: String, default: "" },
+      duration: { type: String, default: "" },
+      reasonForLeaving: { type: String, default: "" },
+      experienceCertificates: { type: String, default: null } // Store URL or file path
+    }
+
 }, { timestamps: true });
 
 const Employee = mongoose.model('Employee', employeeSchema);
