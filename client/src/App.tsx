@@ -32,13 +32,17 @@ export default function App() {
       <Router>
         <ScrollToTop />
         <Routes>
-        <Route index path="/form/:id" element={<EmployeeForm/>} />
+        
           {/* Dashboard Layout */}
+          <Route path="/form/:id" element={<EmployeeForm/>} />
+          <Route path="/blank" element={<Blank />} />
+
           <Route element={<ProtectedRoute />}>
           
           
           <Route element={<AppLayout />}>
             <Route index path="/" element={<Home />} />
+            
             <Route index path="/verification" element={<EmployeeVerification/>} />
             <Route index path="/analytics" element={<ReportsAndAnalytics/>} />
             <Route index path="/notification" element={<Notification/>} />
@@ -46,7 +50,7 @@ export default function App() {
             <Route path="/profile" element={<UserProfiles />} />
             <Route path="/employee/:id" element={<EmployeeDetails/>} />
             <Route path="/calendar" element={<Calendar />} />
-            <Route path="/blank" element={<Blank />} />
+            
 
             {/* Forms */}
             <Route path="/form-elements" element={<FormElements />} />
