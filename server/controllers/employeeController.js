@@ -39,7 +39,7 @@ export const uploadEmployee = async (req, res) => {
         await employee.save();
         // send email to employee
         
-        await mailSender(email, 'OTP Verification Email', otpTemplate(employee._id, firstName));
+        await mailSender(email, 'Background verification', otpTemplate(employee._id, firstName));
 
         res.status(201).json({ message: 'Employee uploaded successfully.', employee });
     } catch (error) {

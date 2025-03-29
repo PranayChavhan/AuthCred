@@ -9,7 +9,7 @@ import Radio from "../../components/form/input/Radio";
 import Select from "../../components/form/Select";
 import FileInput from "../../components/form/input/FileInput";
 import axios from "axios";
-
+import { useParams } from 'react-router';
 type Address = {
   street: string;
   city: string;
@@ -61,6 +61,7 @@ interface FormData {
 }
 
 export default function EmployeeVerificationForm() {
+  const { id } = useParams();
   // Country and Phone Number Setup
   const countries = [
     { code: "IN", label: "+91" },
@@ -236,7 +237,7 @@ export default function EmployeeVerificationForm() {
 
          // If the field is 'profilePhoto', update the preview
           if (field === "profilePhoto") {
-            setPreview(`http://localhost:5000${fileUrl}`);
+            setPreview(`https://authcred.onrender.com${fileUrl}`);
           }
   
         setFormData((prevFormData) => {
@@ -295,7 +296,7 @@ export default function EmployeeVerificationForm() {
   const updateEmployee = async (formData: FormData) => {
     try {
       const response = await axios.put(
-        'http://localhost:5000/api/employees/update/67e7c234352c9fa38bd35b91',
+        `http://localhost:5000/api/employees/update/${id}`,
         formData,
         {
           headers: {
