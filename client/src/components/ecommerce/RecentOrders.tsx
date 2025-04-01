@@ -112,7 +112,7 @@ export default function EmployeeList() {
             <div>
               <p className="font-medium text-gray-800 dark:text-white/90">
                 {employee.firstName} {' '}
-                {`${FILE_BASE_URL}${employee.profilePhoto}`}
+               
               </p>
             </div>
           </td>
