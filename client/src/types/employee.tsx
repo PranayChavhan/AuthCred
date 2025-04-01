@@ -8,6 +8,8 @@ export interface Address {
   }
   
   export interface EducationBackground {
+    email: string;
+    phoneNumber: string;
     highestQualification: string;
     institutionName: string;
     yearOfPassing: string;
@@ -20,6 +22,8 @@ export interface Address {
     institutionName: string;
     yearOfPassing: string;
     marksheet: File | null;
+    email: string;
+    phoneNumber: string;
   };
   type PreviousEmployment = {
     jobTitle: string;

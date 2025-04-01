@@ -23,6 +23,8 @@ type EducationBackground = {
   institutionName: string;
   yearOfPassing: string;
   educationalCertificates: File | null;
+  email: string;
+  phoneNumber: string;
   additionalStudies: AdditionalStudy[];
 };
 
@@ -31,6 +33,8 @@ type AdditionalStudy = {
   institutionName: string;
   yearOfPassing: string;
   marksheet: File | null;
+  email: string;
+  phoneNumber: string;
 };
 
 type PreviousEmployment = {
@@ -62,6 +66,7 @@ interface FormData {
 
 export default function EmployeeVerificationForm() {
   const { id } = useParams();
+  const [showSuccessModal, setShowSuccessModal] = useState(false); 
   // Country and Phone Number Setup
   const countries = [
     { code: "IN", label: "+91" },
@@ -108,24 +113,32 @@ export default function EmployeeVerificationForm() {
       institutionName: "",
       yearOfPassing: "",
       educationalCertificates: null,
+      email: "",
+      phoneNumber: "",
       additionalStudies: [
         {
           level: "10th",
           institutionName: "",
           yearOfPassing: "",
           marksheet: null,
+          email: "",
+          phoneNumber: "",
         },
         {
           level: "12th",
           institutionName: "",
           yearOfPassing: "",
           marksheet: null,
+          email: "",
+          phoneNumber: "",
         },
         {
           level: "Diploma",
           institutionName: "",
           yearOfPassing: "",
           marksheet: null,
+          email: "",
+          phoneNumber: "",
         },
       ],
     },
@@ -324,11 +337,19 @@ export default function EmployeeVerificationForm() {
       .then(result => {
         console.log('Update successful:', result);
         // Add any success handling here (e.g., redirect, show success message)
+        setShowSuccessModal(true);
       })
       .catch(error => {
         console.error('Update failed:', error);
         // Add error handling here (e.g., show error message)
       });
+  };
+
+  const handleCloseModal = () => {
+    setShowSuccessModal(false);
+
+    // Close the current page by redirecting to a blank page
+    window.location.href = 'about:blank';
   };
 
   return (
@@ -337,6 +358,22 @@ export default function EmployeeVerificationForm() {
         className="w-full max-w-4xl"
         title="Employee Verification Form"
       >
+       
+       {showSuccessModal && (
+        <div className="fixed z-10 inset-0 flex items-center justify-center  bg-opacity-500 backdrop-blur-sm">
+          <div className="bg-white p-6 rounded-2xl shadow-2xl w-96 animate-fade-in">
+            <h2 className="text-2xl font-bold mb-4 text-center text-green-600">🎉 Success!</h2>
+            <p className="text-center mb-6 text-gray-700">Employee updated successfully.</p>
+            <button 
+              onClick={handleCloseModal}
+              className="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition duration-200"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
+
         {/* Personal Information Section */}
         <div className="space-y-6">
           <div className="flex flex-col items-center justify-center">
@@ -745,11 +782,46 @@ export default function EmployeeVerificationForm() {
                 className="custom-class"
               />
             </div>
+            
+            
+
+            <div className="flex flex-row justify-between">
+            <div className="w-[48%]">
+              <Label>Institution/University Email *</Label>
+              <div className="relative">
+                <Input
+                  placeholder="info@gmail.com"
+                  type="email"
+                  value={formData.educationBackground.email}
+                  onChange={(e) => handleEducationChange("email", e.target.value)}
+                  className="pl-[62px]"
+                />
+                <span className="absolute left-0 top-1/2 -translate-y-1/2 border-r border-gray-200 px-3.5 py-3 text-gray-500 dark:border-gray-800 dark:text-gray-400">
+                  <EnvelopeIcon className="size-6" />
+                </span>
+              </div>
+            </div>
+            <div className="w-[48%]">
+              <Label>Phone (Optional)</Label>
+              <PhoneInput
+                selectPosition="start"
+                countries={countries}
+                placeholder="+91 (555) 000-0000"
+                onChange={(phone) => handleEducationChange("phoneNumber", phone)}
+              />
+            </div>
+          </div>
+
+<hr></hr>
+
+
+
 
             {/* Additional Studies */}
             {formData.educationBackground.additionalStudies.map(
               (study, index) => (
-                <div key={study.level} className="grid grid-cols-3 gap-4 mt-4">
+                <div key={study.level} >
+                  <div className="grid grid-cols-3 gap-4 mt-4">
                   <div>
                     <Label>{study.level} Level</Label>
                     <Input
@@ -788,6 +860,56 @@ export default function EmployeeVerificationForm() {
                       className="custom-class"
                     />
                   </div>
+</div>
+               
+
+
+
+
+
+
+
+<div className="flex flex-row justify-between py-8">
+            <div className="w-[48%]">
+              <Label>College Email *</Label>
+              <div className="relative">
+                <Input
+                  placeholder="info@gmail.com"
+                  type="email"
+                  value={study.email}
+                  onChange={(e) => handleAdditionalStudiesChange(index, "email", e.target.value)}
+                  className="pl-[62px]"
+                />
+                <span className="absolute left-0 top-1/2 -translate-y-1/2 border-r border-gray-200 px-3.5 py-3 text-gray-500 dark:border-gray-800 dark:text-gray-400">
+                  <EnvelopeIcon className="size-6" />
+                </span>
+              </div>
+            </div>
+            <div className="w-[48%]">
+              <Label>Phone (Optional)</Label>
+              <PhoneInput
+                selectPosition="start"
+                countries={countries}
+                placeholder="+91 (555) 000-0000"
+                onChange={(phone) => handleAdditionalStudiesChange(index, "phoneNumber", phone)}
+              />
+            </div>
+          </div>
+
+<hr></hr>
+
+
+
+
+
+
+
+
+
+
+
+
+
                 </div>
               )
             )}

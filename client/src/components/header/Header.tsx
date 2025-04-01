@@ -79,16 +79,28 @@ const Header: React.FC<HeaderProps> = ({ onClick, onToggle }) => {
           </button>
 
           <Link to="/" className="lg:hidden">
-            <img
-              className="dark:hidden"
-              src="./images/logo/logo.svg"
-              alt="Logo"
-            />
-            <img
-              className="hidden dark:block"
-              src="./images/logo/logo-dark.svg"
-              alt="Logo"
-            />
+          <div className="flex flex-row align-middle gap-3 justify-center">
+                <img
+                  src="/images/logo/logo-icon.svg"
+                  alt="Logo"
+                  width={32}
+                  height={32}
+                />
+                <p className="text-[25px] font-semibold dark:text-white">
+                  AuthentiCred
+                </p>
+              </div>
+              <div className="flex flex-row align-middle gap-3 justify-center">
+                <img
+                  src="/images/logo/logo-icon.svg"
+                  alt="Logo"
+                  width={32}
+                  height={32}
+                />
+                <p className="text-[25px] font-semibold dark:text-white">
+                  AuthentiCred
+                </p>
+              </div>
           </Link>
 
           <button

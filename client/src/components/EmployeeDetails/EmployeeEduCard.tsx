@@ -56,6 +56,24 @@ export default function EmployeeEduCard({ employee }: EmployeeMetaCardProps) {
                   View document
                 </a>
               </div>
+
+              <div>
+                <p className="mb-2 text-xs leading-normal text-gray-500 dark:text-gray-400">
+                  Institution/University Email
+                </p>
+                <p className="text-sm font-medium text-gray-800 dark:text-white/90">
+                  {employee.educationBackground?.email}
+                </p>
+              </div>
+
+              <div>
+                <p className="mb-2 text-xs leading-normal text-gray-500 dark:text-gray-400">
+                  Phone (Optional)
+                </p>
+                <p className="text-sm font-medium text-gray-800 dark:text-white/90">
+                  {employee.educationBackground?.phoneNumber}
+                </p>
+              </div>
             </div>
 
             <h4 className="text-lg pt-10 font-semibold text-gray-800 dark:text-white/90 lg:mb-6">
@@ -108,6 +126,27 @@ export default function EmployeeEduCard({ employee }: EmployeeMetaCardProps) {
                   View document
                 </a>
               </div>
+
+              <div>
+                <p className="mb-2 text-xs leading-normal text-gray-500 dark:text-gray-400">
+                  College Email
+                </p>
+                <p className="text-sm font-medium text-gray-800 dark:text-white/90">
+                  {employee.educationBackground.additionalStudies[0].email}
+                </p>
+              </div>
+
+              <div>
+                <p className="mb-2 text-xs leading-normal text-gray-500 dark:text-gray-400">
+                  Phone (Optional)
+                </p>
+                <p className="text-sm font-medium text-gray-800 dark:text-white/90">
+                  {
+                    employee.educationBackground.additionalStudies[0]
+                      .phoneNumber
+                  }
+                </p>
+              </div>
             </div>
             <hr className="my-5"></hr>
             <div className="grid grid-cols-1  gap-4 lg:grid-cols-2 lg:gap-7 2xl:gap-x-32">
@@ -155,6 +194,27 @@ export default function EmployeeEduCard({ employee }: EmployeeMetaCardProps) {
                 >
                   View document
                 </a>
+              </div>
+
+              <div>
+                <p className="mb-2 text-xs leading-normal text-gray-500 dark:text-gray-400">
+                  College Email
+                </p>
+                <p className="text-sm font-medium text-gray-800 dark:text-white/90">
+                  {employee.educationBackground.additionalStudies[1].email}
+                </p>
+              </div>
+
+              <div>
+                <p className="mb-2 text-xs leading-normal text-gray-500 dark:text-gray-400">
+                  Phone (Optional)
+                </p>
+                <p className="text-sm font-medium text-gray-800 dark:text-white/90">
+                  {
+                    employee.educationBackground.additionalStudies[1]
+                      .phoneNumber
+                  }
+                </p>
               </div>
             </div>
 
@@ -205,6 +265,27 @@ export default function EmployeeEduCard({ employee }: EmployeeMetaCardProps) {
                 >
                   View document
                 </a>
+              </div>
+
+              <div>
+                <p className="mb-2 text-xs leading-normal text-gray-500 dark:text-gray-400">
+                  College Email
+                </p>
+                <p className="text-sm font-medium text-gray-800 dark:text-white/90">
+                  {employee.educationBackground.additionalStudies[2].email}
+                </p>
+              </div>
+
+              <div>
+                <p className="mb-2 text-xs leading-normal text-gray-500 dark:text-gray-400">
+                  Phone (Optional)
+                </p>
+                <p className="text-sm font-medium text-gray-800 dark:text-white/90">
+                  {
+                    employee.educationBackground.additionalStudies[2]
+                      .phoneNumber
+                  }
+                </p>
               </div>
             </div>
           </div>

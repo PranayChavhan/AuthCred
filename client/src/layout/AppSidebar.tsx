@@ -43,8 +43,8 @@ const navItems: NavItem[] = [
   },
   {
     icon: <CalenderIcon />,
-    name: "ffffffff",
-    path: "/form/12",
+    name: "Account settings",
+    path: "/profile",
   },
 ];
 

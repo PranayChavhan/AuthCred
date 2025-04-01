@@ -6,7 +6,7 @@ const employeeSchema = new mongoose.Schema({
     verificationStatus: { type: String, default: 'Pending' },
 
     // Personal Information
-    profilePhoto: { type: String, default: null }, // Store URL or file path
+    profilePhoto: { type: String, default: null },
     firstName: { type: String, default: "" },
     middleName: { type: String, default: "" },
     lastName: { type: String, default: "" },
@@ -15,7 +15,7 @@ const employeeSchema = new mongoose.Schema({
     gender: { type: String, default: "Male" },
     nationality: { type: String, default: "" },
     governmentIdNumber: { type: String, default: "" },
-    governmentIdProof: { type: String, default: null }, // Store URL or file path
+    governmentIdProof: { type: String, default: null },
 
     // Address Information
     currentAddress: {
@@ -38,13 +38,17 @@ const employeeSchema = new mongoose.Schema({
       highestQualification: { type: String, default: "" },
       institutionName: { type: String, default: "" },
       yearOfPassing: { type: String, default: "" },
-      educationalCertificates: { type: String, default: null }, // Store URL or file path
+      educationalCertificates: { type: String, default: null },
+      email: { type: String, unique: true },
+      phoneNumber: { type: String, default: "" },
       additionalStudies: [
         {
           level: { type: String },
           institutionName: { type: String, default: "" },
           yearOfPassing: { type: String, default: "" },
-          marksheet: { type: String, default: null } // Store URL or file path
+          marksheet: { type: String, default: null },
+          email: { type: String, unique: true },
+          phoneNumber: { type: String, default: "" },
         }
       ]
     },
@@ -57,7 +61,7 @@ const employeeSchema = new mongoose.Schema({
       hrEmail: { type: String, default: "" },
       duration: { type: String, default: "" },
       reasonForLeaving: { type: String, default: "" },
-      experienceCertificates: { type: String, default: null } // Store URL or file path
+      experienceCertificates: { type: String, default: null }
     }
 
 }, { timestamps: true });
