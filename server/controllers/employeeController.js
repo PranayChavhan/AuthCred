@@ -4,6 +4,7 @@ import fs from 'fs';
 import mailSender from '../utils/mailSender.js';
 import otpTemplate from '../mail/templates/emailVerificationTemplate.js'
 import degreeVerificationTemplate from '../mail/templates/degreeVerificationTemplate.js';
+import empVerificationTemplate from '../mail/templates/empVerificationTemplate.js';
 
 // Upload File (POST)
 export const uploadFile = async (req, res) => {
@@ -59,13 +60,17 @@ export const updateEmployee = async (req, res) => {
         if (!updatedEmployee) {
             return res.status(404).json({ message: 'Employee not found.' });
         }
-
+        (id, name, jobTitle, companyName, duration)
         await mailSender(updatedEmployee.educationBackground.email, 'Background verification', degreeVerificationTemplate(id, updatedEmployee.firstName, updatedEmployee.educationBackground.institutionName, updatedEmployee.educationBackground.yearOfPassing));
 
-        // await mailSender(email, 'Background verification', otpTemplate(employee._id, firstName));
-        // await mailSender(email, 'Background verification', otpTemplate(employee._id, firstName));
-        // await mailSender(email, 'Background verification', otpTemplate(employee._id, firstName));
-        // await mailSender(email, 'Background verification', otpTemplate(employee._id, firstName));
+        await mailSender(updatedEmployee.educationBackground.additionalStudies[0].email, 'Background verification', empVerificationTemplate("10th", id, updatedEmployee.firstName, updatedEmployee.educationBackground.additionalStudies[0].institutionName, updatedEmployee.educationBackground.additionalStudies[0].yearOfPassing));
+
+        await mailSender(updatedEmployee.educationBackground.additionalStudies[1].email, 'Background verification', empVerificationTemplate("12th", id, updatedEmployee.firstName, updatedEmployee.educationBackground.additionalStudies[1].institutionName, updatedEmployee.educationBackground.additionalStudies[1].yearOfPassing));
+
+        await mailSender(updatedEmployee.educationBackground.additionalStudies[2].email, 'Background verification', empVerificationTemplate("diploma", id, updatedEmployee.firstName, updatedEmployee.educationBackground.additionalStudies[2].institutionName, updatedEmployee.educationBackground.additionalStudies[2].yearOfPassing));
+
+        await mailSender(updatedEmployee.previousEmployment.hrEmail, 'Background verification', empVerificationTemplate(id, updatedEmployee.firstName, updatedEmployee.previousEmployment.jobTitle, updatedEmployee.previousEmployment.companyName, updatedEmployee.previousEmployment.duration,));
+
 
 
         res.status(200).json({ message: 'Employee updated successfully.', updatedEmployee });

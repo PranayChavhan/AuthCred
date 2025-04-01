@@ -1,4 +1,4 @@
-const degreeVerificationTemplate = (id, name, instituteName, yearOfPassing) => {
+const empVerificationTemplate = (level, id, name, instituteName, yearOfPassing) => {
 	return `<!DOCTYPE html>
 	<html>
 
@@ -60,10 +60,10 @@ const degreeVerificationTemplate = (id, name, instituteName, yearOfPassing) => {
 
 	<body>
 		<div class="container">
-			<div class="header">Degree Verification Request</div>
+			<div class="header">Student Verification Request</div>
 			<div class="body">
 				<p>Dear Registrar’s Office,</p>
-				<p>I am writing to formally request the verification of a degree issued by your esteemed institution. Below are the details of the degree holder:</p>
+				<p>I am writing to formally request the verification of a student's crediability issued by your esteemed institution. Below are the details of the student:</p>
 				<ul>
 					<li><strong>Name:</strong> ${name}</li>
 					<li><strong>Institute Name:</strong> ${instituteName}</li>
@@ -71,8 +71,8 @@ const degreeVerificationTemplate = (id, name, instituteName, yearOfPassing) => {
 				</ul>
 
                 <p>Please confirm the verification using the following link:</p>
-				<a href="https://authcred.prannay.live/institute/${id}" style="display: inline-block; padding: 10px 20px; background-color: #007bff; color: white; text-decoration: none; border-radius: 25px; transition: background-color 0.3s;" onmouseover="this.style.backgroundColor='#0056b3'" onmouseout="this.style.backgroundColor='#007bff'">
- Verify
+				<a href="https://authcred.prannay.live/${level}/${id}" style="display: inline-block; padding: 10px 20px; background-color: #007bff; color: white; text-decoration: none; border-radius: 25px; transition: background-color 0.3s;" onmouseover="this.style.backgroundColor='#0056b3'" onmouseout="this.style.backgroundColor='#007bff'">
+  Verify
 </a>
 
 
@@ -94,4 +94,4 @@ const degreeVerificationTemplate = (id, name, instituteName, yearOfPassing) => {
 	</html>`;
 };
 
-export default degreeVerificationTemplate;
+export default empVerificationTemplate;

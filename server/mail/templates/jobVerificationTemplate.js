@@ -1,10 +1,10 @@
-const degreeVerificationTemplate = (id, name, instituteName, yearOfPassing) => {
+const jobVerificationTemplate = (id, name, jobTitle, companyName, duration) => {
 	return `<!DOCTYPE html>
 	<html>
 
 	<head>
 		<meta charset="UTF-8">
-		<title>Degree Verification Request</title>
+		<title>Previous Employment Verification Request</title>
 		<style>
 			body {
 				background-color: #ffffff;
@@ -60,22 +60,21 @@ const degreeVerificationTemplate = (id, name, instituteName, yearOfPassing) => {
 
 	<body>
 		<div class="container">
-			<div class="header">Degree Verification Request</div>
+			<div class="header">Previous Employment Verification Request</div>
 			<div class="body">
-				<p>Dear Registrar’s Office,</p>
-				<p>I am writing to formally request the verification of a degree issued by your esteemed institution. Below are the details of the degree holder:</p>
+				<p>Dear HR Department,</p>
+				<p>I am writing to formally request the verification of employment for the following individual who has previously worked at your company:</p>
 				<ul>
 					<li><strong>Name:</strong> ${name}</li>
-					<li><strong>Institute Name:</strong> ${instituteName}</li>
-					<li><strong>Year of Graduation:</strong> ${yearOfPassing}</li>
+					<li><strong>Previous Company Name:</strong> ${companyName}</li>
+					<li><strong>Designation:</strong> ${jobTitle}</li>
+					<li><strong>Period of Employment:</strong> ${duration}</li>
 				</ul>
 
                 <p>Please confirm the verification using the following link:</p>
-				<a href="https://authcred.prannay.live/institute/${id}" style="display: inline-block; padding: 10px 20px; background-color: #007bff; color: white; text-decoration: none; border-radius: 25px; transition: background-color 0.3s;" onmouseover="this.style.backgroundColor='#0056b3'" onmouseout="this.style.backgroundColor='#007bff'">
- Verify
-</a>
-
-
+				<a href="https://authcred.prannay.live/company/${id}" style="display: inline-block; padding: 10px 20px; background-color: #007bff; color: white; text-decoration: none; border-radius: 25px; transition: background-color 0.3s;" onmouseover="this.style.backgroundColor='#0056b3'" onmouseout="this.style.backgroundColor='#007bff'">
+				  Verify
+				</a>
 
 				<p>This link is valid for 24 hours.</p>
 
@@ -94,4 +93,4 @@ const degreeVerificationTemplate = (id, name, instituteName, yearOfPassing) => {
 	</html>`;
 };
 
-export default degreeVerificationTemplate;
+export default jobVerificationTemplate;
