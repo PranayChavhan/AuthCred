@@ -7,8 +7,11 @@ import { Employee } from "../../types/employee";
 import EmployeePAddressCard from "../../components/EmployeeDetails/EmployeePAddressCard.";
 import EmployeeEduCard from "../../components/EmployeeDetails/EmployeeEduCard";
 import PreviousEmp from "../../components/EmployeeDetails/PreviousEmp";
+import { useParams } from 'react-router';
+
 
 export default function EmployeeDetails() {
+  const { id } = useParams();
   const [employeeData, setEmployeeData] = useState<Employee | null>(null);
   const [loading, setLoading] = useState(true);
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
@@ -19,13 +22,13 @@ export default function EmployeeDetails() {
       
         const token = localStorage.getItem("token"); // Get token from localStorage
       
-        const response = await axios.get(`${API_BASE_URL}/employees/all`, {
+        const response = await axios.get(`${API_BASE_URL}/employees/emp/${id}`, {
           headers: {
             Authorization: `Bearer ${token}`, // Prefix the token with 'Bearer '
           }
         });
         // Assuming we want the first employee from the list
-        setEmployeeData(response.data.employees[0]);
+        setEmployeeData(response.data.employee);
         setLoading(false);
       } catch (err) {
         console.log(err);
@@ -38,7 +41,8 @@ export default function EmployeeDetails() {
   }, []);
 
   if (loading) return <div>Loading...</div>;
-  if (!employeeData) return <div>No employee data found</div>;
+  if (!employeeData?.lastName) return <div>Employee has not filled the form yet........</div>;
+
 
   return (
     <>

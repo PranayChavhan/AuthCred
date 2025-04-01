@@ -16,11 +16,11 @@ export default function Level2({
   if (!employee) return null;
   const { id } = useParams();
     const [showSuccessModal, setShowSuccessModal] = useState(false); 
-  
+    const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
     const updateEmployee = async (studyId: string, verificationStatus: string) => {
       try {
         const response = await axios.patch(
-          `http://localhost:5000/api/employees/update/${id}`, // Make sure this URL is correct
+          `${API_BASE_URL}/employees/update/${id}`, // Make sure this URL is correct
           {
             educationBackground: {
               additionalStudies: [

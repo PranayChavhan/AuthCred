@@ -1,13 +1,60 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
+import axios from "axios";
 import {
   // ArrowDownIcon,
   // ArrowUpIcon,
   BoxIconLine,
   GroupIcon,
 } from "../../icons";
+import { useEffect, useState } from "react";
 // import Badge from "../ui/badge/Badge";
 
+
+
 export default function EcommerceMetrics() {
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+  const [totalVerified, setTotalVerified] = useState(0);
+  const [totalPending, setTotalPending] = useState(0);
+
+    useEffect(() => {
+      const fetchEmployees = async () => {
+        try {
+          const token = localStorage.getItem("token");
+          const response = await axios.get(`${API_BASE_URL}/employees/all`, {
+            headers: {
+              'Authorization': `Bearer ${token}`
+            }
+          });
+          const employees = response.data.employees;
+
+          let verifiedCount = 0;
+          let pendingCount = 0;
+
+          employees.forEach((employee: { verificationStatus: string; }) => {
+  
+            if (employee.verificationStatus === 'Verified') {
+              verifiedCount++;
+            } else if (employee.verificationStatus === 'Pending') {
+              pendingCount++;
+            }else if (employee.verificationStatus === 'Rejected') {
+              pendingCount++;
+            }
+
+          });
+  
+          setTotalVerified(verifiedCount);
+          setTotalPending(pendingCount);
+  
+        } catch (err) {
+          console.log(err);
+        }
+      };
+  
+      fetchEmployees();
+    }, []);
+  
+
+
   return (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-6">
       {/* <!-- Metric Item Start --> */}
@@ -22,7 +69,7 @@ export default function EcommerceMetrics() {
             Total Background Checks Completed
             </span>
             <h4 className="mt-2 font-bold text-gray-800 text-title-sm dark:text-white/90">
-              3,782
+              {totalVerified}
             </h4>
           </div>
           {/* <Badge color="success">
@@ -44,7 +91,7 @@ export default function EcommerceMetrics() {
             Pending Verifications
             </span>
             <h4 className="mt-2 font-bold text-gray-800 text-title-sm dark:text-white/90">
-              359
+              {totalPending}
             </h4>
           </div>
 

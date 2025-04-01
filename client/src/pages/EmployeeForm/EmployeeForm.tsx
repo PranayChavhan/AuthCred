@@ -232,7 +232,7 @@ export default function EmployeeVerificationForm() {
   
       try {
         // Upload file to backend
-        const response = await fetch("http://localhost:5000/api/employees/upload-file", {
+        const response = await fetch(`${API_BASE_URL}/employees/upload-file`, {
           method: "POST",
           body: formData,
         });
@@ -304,12 +304,12 @@ export default function EmployeeVerificationForm() {
       }
     }
   };
-  
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   const updateEmployee = async (formData: FormData) => {
     try {
       const response = await axios.put(
-        `http://localhost:5000/api/employees/update/${id}`,
+        `${API_BASE_URL}/employees/update/${id}`,
         formData,
         {
           headers: {

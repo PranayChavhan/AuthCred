@@ -16,11 +16,12 @@ export default function EduEmp({
   if (!employee) return null;
   const { id } = useParams();
     const [showSuccessModal, setShowSuccessModal] = useState(false); 
+    const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
   
   const updateEmployee = async (verificationStatus: string) => {
     try {
       const response = await axios.patch(
-        `http://localhost:5000/api/employees/update/${id}`,
+        `${API_BASE_URL}/employees/update/${id}`,
         {
             educationBackground: { verificationStatus },
         },
