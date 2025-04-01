@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import EmployeeMetaCard from "../../components/EmployeeDetails/EmployeeMetaCard";
+import EmployeeMetaCard from "../../components/Verification/VerificationCard";
 import EmployeeInfoCard from "../../components/EmployeeDetails/EmployeeInfoCard";
 import EmployeeAddressCard from "../../components/EmployeeDetails/EmployeeAddressCard";
 import { Employee } from "../../types/employee";

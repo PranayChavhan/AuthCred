@@ -15,15 +15,18 @@ export interface Address {
     yearOfPassing: string;
     educationalCertificates: File | null;
     additionalStudies: AdditionalStudy[];
+    verificationStatus: string;
   }
 
   type AdditionalStudy = {
+    _id: string;
     level: "10th" | "12th" | "Diploma";
     institutionName: string;
     yearOfPassing: string;
     marksheet: File | null;
     email: string;
     phoneNumber: string;
+    verificationStatus: string;
   };
   type PreviousEmployment = {
     jobTitle: string;
@@ -33,6 +36,7 @@ export interface Address {
     duration: string;
     reasonForLeaving: string;
     experienceCertificates: File | null;
+    verificationStatus: string;
   };
   
   export interface Employee {

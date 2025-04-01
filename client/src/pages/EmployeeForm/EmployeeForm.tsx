@@ -360,7 +360,7 @@ export default function EmployeeVerificationForm() {
       >
        
        {showSuccessModal && (
-        <div className="fixed z-10 inset-0 flex items-center justify-center  bg-opacity-500 backdrop-blur-sm">
+        <div className="fixed z-10 inset-0 flex items-center justify-center  bg-opacity-50 backdrop-blur-sm">
           <div className="bg-white p-6 rounded-2xl shadow-2xl w-96 animate-fade-in">
             <h2 className="text-2xl font-bold mb-4 text-center text-green-600">🎉 Success!</h2>
             <p className="text-center mb-6 text-gray-700">Employee updated successfully.</p>

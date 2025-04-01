@@ -3,6 +3,7 @@ import path from 'path';
 import fs from 'fs';
 import mailSender from '../utils/mailSender.js';
 import otpTemplate from '../mail/templates/emailVerificationTemplate.js'
+import degreeVerificationTemplate from '../mail/templates/degreeVerificationTemplate.js';
 
 // Upload File (POST)
 export const uploadFile = async (req, res) => {
@@ -59,7 +60,14 @@ export const updateEmployee = async (req, res) => {
             return res.status(404).json({ message: 'Employee not found.' });
         }
 
-        
+        await mailSender(updatedEmployee.educationBackground.email, 'Background verification', degreeVerificationTemplate(id, updatedEmployee.firstName, updatedEmployee.educationBackground.institutionName, updatedEmployee.educationBackground.yearOfPassing));
+
+        // await mailSender(email, 'Background verification', otpTemplate(employee._id, firstName));
+        // await mailSender(email, 'Background verification', otpTemplate(employee._id, firstName));
+        // await mailSender(email, 'Background verification', otpTemplate(employee._id, firstName));
+        // await mailSender(email, 'Background verification', otpTemplate(employee._id, firstName));
+
+
         res.status(200).json({ message: 'Employee updated successfully.', updatedEmployee });
     } catch (error) {
         res.status(500).json({ message: 'Error updating employee.', error: error.message });
@@ -74,5 +82,60 @@ export const getAllEmployees = async (req, res) => {
         res.status(200).json({ message: 'Employees fetched successfully.', employees });
     } catch (error) {
         res.status(500).json({ message: 'Error fetching employees.', error: error.message });
+    }
+};
+
+// Get Employee By ID (GET)
+export const getEmployeeById = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        const employee = await Employee.findById(id);
+
+        if (!employee) {
+            return res.status(404).json({ message: 'Employee not found.' });
+        }
+
+        res.status(200).json({ message: 'Employee fetched successfully.', employee });
+    } catch (error) {
+        res.status(500).json({ message: 'Error fetching employee.', error: error.message });
+    }
+};
+
+// Update Employee Partial (PATCH)
+export const updateEmployeePartial = async (req, res) => {
+    try {
+        const { id } = req.params;  // Get the employee ID from the URL
+        const updateData = req.body; // Get the data to be updated from the request body
+
+        // Find the employee by ID
+        const employee = await Employee.findById(id);
+        if (!employee) {
+            return res.status(404).json({ message: 'Employee not found.' });
+        }
+
+        // Update the verificationStatus of the top-level educationBackground
+        if (updateData.educationBackground && updateData.educationBackground.verificationStatus) {
+            employee.educationBackground.verificationStatus = updateData.educationBackground.verificationStatus;
+        }
+
+        // Update the verificationStatus of individual studies in additionalStudies
+        if (updateData.educationBackground && updateData.educationBackground.additionalStudies) {
+            updateData.educationBackground.additionalStudies.forEach((study) => {
+                const studyToUpdate = employee.educationBackground.additionalStudies.find(
+                    (existingStudy) => existingStudy._id.toString() === study._id
+                );
+                if (studyToUpdate && study.verificationStatus) {
+                    studyToUpdate.verificationStatus = study.verificationStatus;
+                }
+            });
+        }
+
+        // Save the updated employee data
+        const updatedEmployee = await employee.save();
+
+        res.status(200).json({ message: 'Employee updated successfully.', updatedEmployee });
+    } catch (error) {
+        res.status(500).json({ message: 'Error updating employee.', error: error.message });
     }
 };

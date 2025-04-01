@@ -41,6 +41,7 @@ const employeeSchema = new mongoose.Schema({
       educationalCertificates: { type: String, default: null },
       email: { type: String, unique: true },
       phoneNumber: { type: String, default: "" },
+      verificationStatus: { type: String, default: 'Pending' },
       additionalStudies: [
         {
           level: { type: String },
@@ -49,6 +50,7 @@ const employeeSchema = new mongoose.Schema({
           marksheet: { type: String, default: null },
           email: { type: String, unique: true },
           phoneNumber: { type: String, default: "" },
+          verificationStatus: { type: String, default: 'Pending' },
         }
       ]
     },
@@ -61,7 +63,8 @@ const employeeSchema = new mongoose.Schema({
       hrEmail: { type: String, default: "" },
       duration: { type: String, default: "" },
       reasonForLeaving: { type: String, default: "" },
-      experienceCertificates: { type: String, default: null }
+      experienceCertificates: { type: String, default: null },
+      verificationStatus: { type: String, default: 'Pending' },
     }
 
 }, { timestamps: true });

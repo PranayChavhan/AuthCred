@@ -1,7 +1,7 @@
 import express from 'express';
 import multer from 'multer';
 import fs from 'fs';
-import { uploadEmployee, updateEmployee, getAllEmployees, uploadFile } from '../controllers/employeeController.js';
+import { uploadEmployee, updateEmployee, getAllEmployees, uploadFile, getEmployeeById, updateEmployeePartial } from '../controllers/employeeController.js';
 import authMiddleware from "../middleware/authMiddleware.js"; // Import middleware
 
 
@@ -34,6 +34,10 @@ router.post('/upload', authMiddleware, uploadEmployee);
 router.put('/update/:id', updateEmployee);
 router.get('/all', authMiddleware, getAllEmployees);
 router.post('/upload-file', upload.single('file'), uploadFile);
+
+router.get('/emp/:id', getEmployeeById);
+
+router.patch('/update/:id', updateEmployeePartial);
 
 
 export default router;

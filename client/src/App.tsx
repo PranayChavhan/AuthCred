@@ -24,6 +24,7 @@ import Notification from "./pages/Notification/Notification";
 import ProtectedRoute from "./ProtectedRoute";
 import EmployeeForm from "./pages/EmployeeForm/EmployeeForm";
 import EmployeeDetails from "./pages/EmployeeDetails/EmployeeDetails";
+import VerificationPage from "./pages/VerificaationPage/VerificationPage";
 
 
 export default function App() {
@@ -35,6 +36,8 @@ export default function App() {
         
           {/* Dashboard Layout */}
           <Route path="/form/:id" element={<EmployeeForm/>} />
+
+          <Route path="/:institute/:id" element={<VerificationPage/>} />
           
           <Route element={<ProtectedRoute />}>
           
