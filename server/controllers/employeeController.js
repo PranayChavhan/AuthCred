@@ -136,6 +136,26 @@ export const updateEmployeePartial = async (req, res) => {
             });
         }
 
+        // Update the verificationStatus of previousEmployment if provided
+        if (updateData.previousEmployment && updateData.previousEmployment.verificationStatus) {
+            employee.previousEmployment.verificationStatus = updateData.previousEmployment.verificationStatus;
+        }
+
+        // ✅ Auto-Calculate Overall Verification Status
+        const isEducationVerified = employee.educationBackground.verificationStatus === 'Verified';
+        const isAdditionalStudiesVerified = employee.educationBackground.additionalStudies.every(
+            (study) => study.verificationStatus === 'Verified'
+        );
+        const isPreviousEmploymentVerified = employee.previousEmployment.verificationStatus === 'Verified';
+
+        // Set the overall verification status
+        if (isEducationVerified && isAdditionalStudiesVerified && isPreviousEmploymentVerified) {
+            employee.verificationStatus = 'Verified';
+        } else {
+            employee.verificationStatus = 'Pending';
+        }
+
+
         // Save the updated employee data
         const updatedEmployee = await employee.save();
 

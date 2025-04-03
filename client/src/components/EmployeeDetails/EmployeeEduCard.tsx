@@ -62,7 +62,7 @@ export default function EmployeeEduCard({ employee }: EmployeeMetaCardProps) {
                   Educational Certificates
                 </p>
                 <a
-                  href={`http://localhost:5000${employee.educationBackground.educationalCertificates}`}
+                  href={`https://authcred.onrender.com${employee.educationBackground.educationalCertificates}`}
                   target="_blank"
                   className="text-sm font-medium text-blue-800 dark:text-white/90 underline"
                 >
@@ -145,7 +145,7 @@ export default function EmployeeEduCard({ employee }: EmployeeMetaCardProps) {
                   Educational Certificates
                 </p>
                 <a
-                  href={`http://localhost:5000${employee.educationBackground.additionalStudies[0].marksheet}`}
+                  href={`https://authcred.onrender.com${employee.educationBackground.additionalStudies[0].marksheet}`}
                   target="_blank"
                   className="text-sm font-medium text-blue-800 dark:text-white/90 underline"
                 >
@@ -227,7 +227,7 @@ export default function EmployeeEduCard({ employee }: EmployeeMetaCardProps) {
                   Educational Certificates
                 </p>
                 <a
-                  href={`http://localhost:5000${employee.educationBackground.additionalStudies[1].marksheet}`}
+                  href={`https://authcred.onrender.com${employee.educationBackground.additionalStudies[1].marksheet}`}
                   target="_blank"
                   className="text-sm font-medium text-blue-800 dark:text-white/90 underline"
                 >
@@ -311,7 +311,7 @@ export default function EmployeeEduCard({ employee }: EmployeeMetaCardProps) {
                   Educational Certificates
                 </p>
                 <a
-                  href={`http://localhost:5000${employee.educationBackground.additionalStudies[2].marksheet}`}
+                  href={`https://authcred.onrender.com${employee.educationBackground.additionalStudies[2].marksheet}`}
                   target="_blank"
                   className="text-sm font-medium text-blue-800 dark:text-white/90 underline"
                 >

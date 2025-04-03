@@ -30,15 +30,73 @@ export default function EmployeeDetails() {
         // Assuming we want the first employee from the list
         setEmployeeData(response.data.employee);
         setLoading(false);
+
+
+        // Check if employee is fully verified and trigger API call if true
+        if (response.data.employee.verificationStatus === "Verified") {
+          await triggerVerifiedAPI(response.data.employee);
+          await triggerUploadResumeAPI(response.data.employee);
+      }
+
+
       } catch (err) {
         console.log(err);
         
         setLoading(false);
       }
     };
-
     fetchEmployeeData();
-  }, []);
+  }, [id, API_BASE_URL]);
+
+
+// Trigger API when employee is verified
+const triggerVerifiedAPI = async (employee: Employee) => {
+  try {
+
+      // Prepare the data to be sent in the request body
+      const requestBody = {
+          name: `${employee.firstName} ${employee.lastName}`,
+          mobile: employee.phoneNumber,
+          aadhar: employee.governmentIdNumber,
+          resumeIPFS: "http://localhost:5000/uploads/Resume.pdf"
+      };
+
+      const response = await axios.post(`http://localhost:3000/register`, requestBody, {
+          headers: {
+              'Content-Type': 'application/json'
+          }
+      });
+
+      console.log('API Triggered Successfully: ', response.data);
+
+  } catch (error) {
+      console.log('Error triggering API:', error);
+  }
+};
+
+const triggerUploadResumeAPI = async (employee: Employee) => {
+  try {
+
+      // Prepare the data to be sent in the request body
+      const requestBody = {
+          name: `${employee.firstName} ${employee.lastName}`,
+          mobile: employee.phoneNumber,
+          aadhar: employee.governmentIdNumber,
+          resumeIPFS: "http://localhost:5000/uploads/Resume.pdf"
+      };
+
+      const response = await axios.post(`http://localhost:3000/updateResume`, requestBody, {
+          headers: {
+              'Content-Type': 'application/json'
+          }
+      });
+
+      console.log('API Triggered Successfully: ', response.data);
+
+  } catch (error) {
+      console.log('Error triggering API:', error);
+  }
+};
 
   if (loading) return <div>Loading...</div>;
   if (!employeeData?.lastName) return <div>Employee has not filled the form yet........</div>;

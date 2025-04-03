@@ -97,7 +97,7 @@ export default function EmployeeInfoCard({ employee }: EmployeeMetaCardProps) {
               <p className="mb-2 text-xs leading-normal text-gray-500 dark:text-gray-400">
               Government Id
               </p>
-              <a href={`http://localhost:5000${employee.governmentIdProof}`} target="_blank" className="text-sm font-medium text-blue-800 dark:text-white/90 underline">
+              <a href={`https://authcred.onrender.com${employee.governmentIdProof}`} target="_blank" className="text-sm font-medium text-blue-800 dark:text-white/90 underline">
               View document
               </a>
             </div>

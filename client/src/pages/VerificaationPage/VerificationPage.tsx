@@ -23,7 +23,7 @@ console.log(id);
     const fetchEmployeeData = async () => {
       try {
         const response = await axios.get(
-          `${API_BASE_URL}/employees/emp/67e85684b332c35860d1cf69`,
+          `${API_BASE_URL}/employees/emp/${id}`,
           {}
         );
         // Assuming we want the first employee from the list
@@ -83,7 +83,7 @@ console.log(id);
           {selectedDocument ? (
             <div className=" flex items-center justify-center bg-gray-100 dark:bg-gray-700 rounded-md">
               <img
-                src={`http://localhost:5000${selectedDocument}`}
+                src={`https://authcred.onrender.com${selectedDocument}`}
                 alt="Document preview"
                 className=""
                 onError={(e) => {
