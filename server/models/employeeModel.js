@@ -39,7 +39,7 @@ const employeeSchema = new mongoose.Schema({
       institutionName: { type: String, default: "" },
       yearOfPassing: { type: String, default: "" },
       educationalCertificates: { type: String, default: null },
-      email: { type: String, unique: true },
+      email: { type: String },
       phoneNumber: { type: String, default: "" },
       verificationStatus: { type: String, default: 'Pending' },
       additionalStudies: [
@@ -48,7 +48,7 @@ const employeeSchema = new mongoose.Schema({
           institutionName: { type: String, default: "" },
           yearOfPassing: { type: String, default: "" },
           marksheet: { type: String, default: null },
-          email: { type: String, unique: true },
+          email: { type: String },
           phoneNumber: { type: String, default: "" },
           verificationStatus: { type: String, default: 'Pending' },
         }

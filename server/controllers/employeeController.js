@@ -5,6 +5,7 @@ import mailSender from '../utils/mailSender.js';
 import otpTemplate from '../mail/templates/emailVerificationTemplate.js'
 import degreeVerificationTemplate from '../mail/templates/degreeVerificationTemplate.js';
 import empVerificationTemplate from '../mail/templates/empVerificationTemplate.js';
+import jobVerificationTemplate from '../mail/templates/jobVerificationTemplate.js';
 
 // Upload File (POST)
 export const uploadFile = async (req, res) => {
